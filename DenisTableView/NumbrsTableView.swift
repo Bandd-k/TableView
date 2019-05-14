@@ -56,6 +56,7 @@ class MutableSectionModel<T: Equatable>: SectionModelProtocol {
     var didChangeContent: (([ModelChange]) -> Void)?
 
     private func update(old: [T], new: [T]) {
+        // change to https://github.com/lxcid/ListDiff/blob/master/Sources/ListDiff.swift
         let diff = old.diff(new)
         let deletions = diff.deletions.map { ModelChange.deleteItem(IndexPath(row: $0.idx, section: 0)) }
         let insertions = diff.insertions.map { ModelChange.insertItem(IndexPath(row: $0.idx, section: 0)) } // section 0?
