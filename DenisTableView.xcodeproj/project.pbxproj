@@ -12,7 +12,7 @@
 		506F45DE2289A7690087DB7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506F45DC2289A7690087DB7B /* Main.storyboard */; };
 		506F45E02289A76B0087DB7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506F45DF2289A76B0087DB7B /* Assets.xcassets */; };
 		506F45E32289A76B0087DB7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506F45E12289A76B0087DB7B /* LaunchScreen.storyboard */; };
-		506F45EB2289A77C0087DB7B /* NumbrsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506F45EA2289A77C0087DB7B /* NumbrsTableView.swift */; };
+		506F45EB2289A77C0087DB7B /* GoogleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506F45EA2289A77C0087DB7B /* GoogleTableView.swift */; };
 		506F45ED2289A8880087DB7B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506F45EC2289A8880087DB7B /* Extensions.swift */; };
 		506F45EF228A8D900087DB7B /* Dwifft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506F45EE228A8D900087DB7B /* Dwifft.swift */; };
 /* End PBXBuildFile section */
@@ -25,7 +25,7 @@
 		506F45DF2289A76B0087DB7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		506F45E22289A76B0087DB7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		506F45E42289A76B0087DB7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		506F45EA2289A77C0087DB7B /* NumbrsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbrsTableView.swift; sourceTree = "<group>"; };
+		506F45EA2289A77C0087DB7B /* GoogleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTableView.swift; sourceTree = "<group>"; };
 		506F45EC2289A8880087DB7B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		506F45EE228A8D900087DB7B /* Dwifft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dwifft.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,7 +63,7 @@
 				506F45D82289A7690087DB7B /* AppDelegate.swift */,
 				506F45DA2289A7690087DB7B /* ViewController.swift */,
 				506F45EC2289A8880087DB7B /* Extensions.swift */,
-				506F45EA2289A77C0087DB7B /* NumbrsTableView.swift */,
+				506F45EA2289A77C0087DB7B /* GoogleTableView.swift */,
 				506F45DC2289A7690087DB7B /* Main.storyboard */,
 				506F45DF2289A76B0087DB7B /* Assets.xcassets */,
 				506F45EE228A8D900087DB7B /* Dwifft.swift */,
@@ -146,7 +146,7 @@
 			files = (
 				506F45DB2289A7690087DB7B /* ViewController.swift in Sources */,
 				506F45D92289A7690087DB7B /* AppDelegate.swift in Sources */,
-				506F45EB2289A77C0087DB7B /* NumbrsTableView.swift in Sources */,
+				506F45EB2289A77C0087DB7B /* GoogleTableView.swift in Sources */,
 				506F45EF228A8D900087DB7B /* Dwifft.swift in Sources */,
 				506F45ED2289A8880087DB7B /* Extensions.swift in Sources */,
 			);

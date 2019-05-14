@@ -65,7 +65,7 @@ class MutableSectionModel<T: Equatable>: SectionModelProtocol {
     }
 }
 
-class NumbrsTableView: UITableView {
+class GoogleTableView: UITableView {
     // : UITableViewController
     var sections: [SectionModelProtocol] = [] {
         didSet {
@@ -78,7 +78,7 @@ class NumbrsTableView: UITableView {
     }
     var configurators: [String: AnyCellConfigurator] = [:]
     var cachedCellHeights: [IndexPath: CGFloat] = [:]
-    weak var owner: NumbrsTableViewOwner?
+    weak var owner: GoogleTableViewOwner?
 
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -115,7 +115,7 @@ class NumbrsTableView: UITableView {
     }
 }
 
-extension NumbrsTableView: UITableViewDataSource {
+extension GoogleTableView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -131,7 +131,7 @@ extension NumbrsTableView: UITableViewDataSource {
     }
 }
 
-extension NumbrsTableView: UITableViewDelegate {
+extension GoogleTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // add cachedCellHeights
         let (item, configurator) = objects(for: indexPath)
@@ -176,7 +176,7 @@ protocol AnyCellConfigurator {
 }
 
 @objc
-protocol NumbrsTableViewOwner: AnyObject {
-    @objc optional func tableView(_ tableView: NumbrsTableView, didSelectRow model: Any, at indexPath: IndexPath)
-    @objc optional func tableView(_ tableView: NumbrsTableView, willDisplayCell cell: UITableViewCell, at indexPath: IndexPath)
+protocol GoogleTableViewOwner: AnyObject {
+    @objc optional func tableView(_ tableView: GoogleTableView, didSelectRow model: Any, at indexPath: IndexPath)
+    @objc optional func tableView(_ tableView: GoogleTableView, willDisplayCell cell: UITableViewCell, at indexPath: IndexPath)
 }

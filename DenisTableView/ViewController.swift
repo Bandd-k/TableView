@@ -1,7 +1,7 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    var tableView: NumbrsTableView!
+    var tableView: GoogleTableView!
     let finalModel = MutableSectionModel(items: [CellModel(title: "first", message: "privet"), CellModel(title: "second", message: "hello")])
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,7 +10,7 @@ final class ViewController: UIViewController {
     }
 
     private func setUpTableView() {
-        tableView = NumbrsTableView()
+        tableView = GoogleTableView()
         view.addSubview(tableView)
         tableView.owner = self
         tableView.pinToSuperview()
@@ -25,8 +25,8 @@ final class ViewController: UIViewController {
     }
 }
 
-extension ViewController: NumbrsTableViewOwner {
-    func tableView(_ tableView: NumbrsTableView, didSelectRow model: Any, at indexPath: IndexPath) {
+extension ViewController: GoogleTableViewOwner {
+    func tableView(_ tableView: GoogleTableView, didSelectRow model: Any, at indexPath: IndexPath) {
         guard let model = model as? CellModel else { return }
         print(model.title)
     }
