@@ -1,33 +1,78 @@
 import Foundation
 import UIKit
 
-class SectionModel {
-    var items: [Any] {
+@objc class ModelChange: NSObject {
+    // add description
+    enum Category {
+        case insert
+        case delete
+//        case update
+//        case move
+//        case insertSection
+//        case deleteSection
+//        case moveSection
+    }
+    let indexPath: IndexPath?
+    let newIndexPath: IndexPath?
+    let category: Category
+    init(category: Category, indexPath: IndexPath?, newIndexPath: IndexPath?) {
+        self.category = category
+        self.indexPath = indexPath
+        self.newIndexPath = newIndexPath
+    }
+
+    static func deleteItem(_ indexPath: IndexPath) -> ModelChange {
+        return ModelChange(category: .delete, indexPath: indexPath, newIndexPath: nil)
+    }
+
+    static func insertItem(_ indexPath: IndexPath) -> ModelChange {
+        return ModelChange(category: .insert, indexPath: nil, newIndexPath: indexPath)
+    }
+}
+
+@objc
+protocol SectionModelProtocol {
+    func item(at index: Int) -> Any // change to AnyObject
+    var numberOfItems: Int { get }
+    var didChangeContent: (([ModelChange]) -> Void)? { get set } // new protocol?
+}
+
+class MutableSectionModel<T: Equatable>: SectionModelProtocol {
+
+    var items: [T] {
         didSet {
-            print("aaa")
-            // call update
+            self.update(old: oldValue, new: items)
         }
     }
     var numberOfItems: Int { return items.count }
-    init(items: [Any]) {
+    init(items: [T]) {
         self.items = items
     }
 
-    func item(at index: Int) -> Any {
+    func item(at index: Int) -> Any { // change to AnyObject
         return items[index]
     }
 
-    private func update(old: [AnyObject], new: [AnyObject]) {
-        // calculate diff
+    var didChangeContent: (([ModelChange]) -> Void)?
+
+    private func update(old: [T], new: [T]) {
+        let diff = old.diff(new)
+        let deletions = diff.deletions.map { ModelChange.deleteItem(IndexPath(row: $0.idx, section: 0)) }
+        let insertions = diff.insertions.map { ModelChange.insertItem(IndexPath(row: $0.idx, section: 0)) } // section 0?
+        let changes = [deletions, insertions].flatMap { $0 }
+        self.didChangeContent?(changes)
     }
 }
 
 class NumbrsTableView: UITableView {
     // : UITableViewController
-    var sections: [SectionModel] = [] {
+    var sections: [SectionModelProtocol] = [] {
         didSet {
             self.reloadData()
             //proper cell updates
+            sections.forEach { section in
+                section.didChangeContent = { [weak self] changes in self?.updateTable(with: changes) }
+            }
         }
     }
     var configurators: [String: AnyCellConfigurator] = [:]
@@ -38,6 +83,17 @@ class NumbrsTableView: UITableView {
         super.init(frame: frame, style: style)
         self.delegate = self
         self.dataSource = self
+    }
+
+    func updateTable(with changes: [ModelChange]) {
+        self.performBatchUpdates({
+            changes.forEach { change in
+                switch change.category {
+                case .insert: self.insertRows(at: [change.newIndexPath!], with: .automatic)
+                case .delete: self.deleteRows(at: [change.indexPath!], with: .automatic)
+                }
+            }
+        })
     }
 
     required init?(coder aDecoder: NSCoder) {

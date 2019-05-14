@@ -2,7 +2,7 @@ import UIKit
 
 final class ViewController: UIViewController {
     var tableView: NumbrsTableView!
-    let models = [CellModel(title: "place", action: { print("hah")}), CellModel(title: "account", action: {})]
+    let finalModel = MutableSectionModel(items: [CellModel(title: "first", message: "privet"), CellModel(title: "second", message: "hello")])
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
@@ -15,10 +15,12 @@ final class ViewController: UIViewController {
         tableView.owner = self
         tableView.pinToSuperview()
         tableView.register(configurator: TableViewCell.configurator)
-        tableView.sections.append(SectionModel(items: models))
+        tableView.sections.append(finalModel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.finalModel.items.removeFirst()
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let toAdd = SectionModel(items: self.models)
-            self.tableView.sections.append(toAdd)
+            self.finalModel.items.append(CellModel(title: "newElement", message: "chao"))
         }
     }
 }
@@ -26,13 +28,13 @@ final class ViewController: UIViewController {
 extension ViewController: NumbrsTableViewOwner {
     func tableView(_ tableView: NumbrsTableView, didSelectRow model: Any, at indexPath: IndexPath) {
         guard let model = model as? CellModel else { return }
-        model.action()
+        print(model.title)
     }
 }
 
 final class TableViewCell: UITableViewCell {
     static let configurator = CellConfigurator<TableViewCell, CellModel>(
-        heightForItem: { _ in return 40 },
+        heightForItem: { _ in return 50 },
         configureCell: { cell, item, _ in
             cell.title.text = item.title
             cell.icon.image = UIImage(named: "information")
@@ -72,7 +74,15 @@ final class TableViewCell: UITableViewCell {
 
 }
 
-struct CellModel {
+class CellModel: Equatable {
+    // it is just for fast test
+    static func == (lhs: CellModel, rhs: CellModel) -> Bool {
+        return lhs === rhs
+    }
     let title: String
-    let action: VoidFunc
+    let message: String
+    init(title: String, message: String) {
+        self.title = title
+        self.message = message
+    }
 }
